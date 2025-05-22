@@ -1,26 +1,55 @@
 package EventManagerPro;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class VentanaInformeEntradas extends JFrame {
-    private JTextArea areaInforme;
+    private JTable tablaInforme;
+    private DefaultTableModel modeloTabla;
 
     public VentanaInformeEntradas() {
         setTitle("Informe de Entradas Vendidas y Recaudación");
-        setSize(600, 400);
+        setSize(700, 400);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+        setResizable(false);
 
-        areaInforme = new JTextArea();
-        areaInforme.setEditable(false);
-        JScrollPane scroll = new JScrollPane(areaInforme);
-        add(scroll, BorderLayout.CENTER);
+        // Columnas de la tabla
+        String[] columnas = {"Evento", "Fecha", "Entradas", "Ventas", "Recaudación (€)"};
+        modeloTabla = new DefaultTableModel(columnas, 0) {
+            // Evitar edición de celdas
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tablaInforme = new JTable(modeloTabla);
+        tablaInforme.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tablaInforme.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tablaInforme.setRowHeight(25);
+
+        JScrollPane scroll = new JScrollPane(tablaInforme);
+
+        JPanel panelCentral = new JPanel(new BorderLayout());
+        panelCentral.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelCentral.add(scroll, BorderLayout.CENTER);
+        add(panelCentral, BorderLayout.CENTER);
+
+        JButton btnCerrar = new JButton("Cerrar");
+        btnCerrar.addActionListener(e -> dispose());
+        JPanel panelBotones = new JPanel();
+        panelBotones.add(btnCerrar);
+        add(panelBotones, BorderLayout.SOUTH);
 
         cargarInforme();
+
+        ImageIcon iconoVentana = new ImageIcon(getClass().getResource("/EventManagerPro/icon.png"));
+        setIconImage(iconoVentana.getImage());
     }
 
     private void cargarInforme() {
@@ -40,9 +69,7 @@ public class VentanaInformeEntradas extends JFrame {
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
-            StringBuilder sb = new StringBuilder();
-            sb.append("Evento\t\tFecha\t\tEntradas\tVentas\tRecaudación (€)\n");
-            sb.append("------------------------------------------------------------------\n");
+            modeloTabla.setRowCount(0); // limpiar tabla
 
             while (rs.next()) {
                 String nombre = rs.getString("nombre");
@@ -51,14 +78,13 @@ public class VentanaInformeEntradas extends JFrame {
                 int ventas = rs.getInt("total_ventas");
                 int recaudacion = entradas * PRECIO_ENTRADA;
 
-                sb.append(String.format("%-20s %-12s %-8d %-6d %d\n",
-                        nombre, fecha, entradas, ventas, recaudacion));
+                Object[] fila = {nombre, fecha, entradas, ventas, recaudacion};
+                modeloTabla.addRow(fila);
             }
 
-            areaInforme.setText(sb.toString());
-
         } catch (Exception e) {
-            areaInforme.setText("Error al generar informe: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al generar informe: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

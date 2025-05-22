@@ -9,10 +9,17 @@ public class VentanaAgregarEvento extends JFrame {
     public VentanaAgregarEvento(VentanaEventos ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
         setTitle("Nuevo Evento");
-        setSize(300, 300);
+        setSize(350, 350);
         setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        
+        ImageIcon iconoVentana = new ImageIcon(getClass().getResource("/EventManagerPro/icon.png"));
+	    setIconImage(iconoVentana.getImage());
+        // Panel principal con padding
+        JPanel panel = new JPanel(new GridLayout(6, 2, 8, 8));
+        panel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+        panel.setBackground(new Color(245, 245, 245));
 
-        JPanel panel = new JPanel(new GridLayout(6, 2));
         JTextField nombre = new JTextField();
         JTextField tipo = new JTextField();
         JTextField fecha = new JTextField();
@@ -20,14 +27,32 @@ public class VentanaAgregarEvento extends JFrame {
         JTextField capacidad = new JTextField();
         JButton guardar = new JButton("Guardar");
 
-        panel.add(new JLabel("Nombre:")); panel.add(nombre);
-        panel.add(new JLabel("Tipo:")); panel.add(tipo);
-        panel.add(new JLabel("Fecha (YYYY-MM-DD):")); panel.add(fecha);
-        panel.add(new JLabel("Lugar:")); panel.add(lugar);
-        panel.add(new JLabel("Capacidad:")); panel.add(capacidad);
-        panel.add(new JLabel()); panel.add(guardar);
+        Font labelFont = new Font("Segoe UI", Font.BOLD, 14);
+        Font fieldFont = new Font("Segoe UI", Font.PLAIN, 14);
 
-        add(panel);
+        // Etiquetas
+        panel.add(crearLabel("Nombre:", labelFont));
+        panel.add(campoConFuente(nombre, fieldFont));
+
+        panel.add(crearLabel("Tipo:", labelFont));
+        panel.add(campoConFuente(tipo, fieldFont));
+
+        panel.add(crearLabel("Fecha (YYYY-MM-DD):", labelFont));
+        panel.add(campoConFuente(fecha, fieldFont));
+
+        panel.add(crearLabel("Lugar:", labelFont));
+        panel.add(campoConFuente(lugar, fieldFont));
+
+        panel.add(crearLabel("Capacidad:", labelFont));
+        panel.add(campoConFuente(capacidad, fieldFont));
+
+        panel.add(new JLabel()); // espacio vacío
+        panel.add(guardar);
+
+        add(panel, BorderLayout.CENTER);
+
+        // Estilo botón
+        estiloBoton(guardar);
 
         guardar.addActionListener(e -> {
             if (nombre.getText().isEmpty() || tipo.getText().isEmpty() ||
@@ -50,5 +75,23 @@ public class VentanaAgregarEvento extends JFrame {
                 JOptionPane.showMessageDialog(this, "Capacidad debe ser un número.");
             }
         });
+    }
+
+    private JLabel crearLabel(String texto, Font font) {
+        JLabel label = new JLabel(texto);
+        label.setFont(font);
+        return label;
+    }
+
+    private JTextField campoConFuente(JTextField campo, Font font) {
+        campo.setFont(font);
+        return campo;
+    }
+
+    private void estiloBoton(JButton btn) {
+        btn.setBackground(new Color(0, 120, 215));
+        btn.setForeground(Color.WHITE);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btn.setFocusPainted(false);
     }
 }

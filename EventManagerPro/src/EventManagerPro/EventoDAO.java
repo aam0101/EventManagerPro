@@ -54,4 +54,17 @@ public class EventoDAO {
             return false;
         }
     }
+    public static boolean eliminarEvento(int idEvento) {
+        String sql = "DELETE FROM Evento WHERE id_evento = ?";
+        try (Connection conn = Conexion.conectar();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idEvento);
+            int filas = ps.executeUpdate();
+            return filas > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
