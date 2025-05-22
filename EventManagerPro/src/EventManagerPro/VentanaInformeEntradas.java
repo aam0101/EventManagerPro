@@ -12,19 +12,17 @@ public class VentanaInformeEntradas extends JFrame {
     private DefaultTableModel modeloTabla;
 
     public VentanaInformeEntradas() {
-        setTitle("Informe de Entradas Vendidas y Recaudación");
-        setSize(700, 400);
+        setTitle("Informe Detallado de Entradas");
+        setSize(800, 400);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         setResizable(false);
 
-        // Columnas de la tabla
-        String[] columnas = {"Evento", "Fecha", "Entradas", "Ventas", "Recaudación (€)"};
+        String[] columnas = {"ID Entrada", "ID Evento", "Comprador", "Email", "Cantidad", "Fecha Compra"};
         modeloTabla = new DefaultTableModel(columnas, 0) {
-            // Evitar edición de celdas
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                return false; // evitar edición
             }
         };
 
@@ -53,16 +51,10 @@ public class VentanaInformeEntradas extends JFrame {
     }
 
     private void cargarInforme() {
-        final int PRECIO_ENTRADA = 10; // euros por entrada
-
         String sql = """
-            SELECT e.nombre, e.fecha, 
-                   COUNT(en.id_entrada) AS total_ventas, 
-                   SUM(en.cantidad) AS total_entradas
-            FROM Evento e
-            LEFT JOIN Entrada en ON e.id_evento = en.id_evento
-            GROUP BY e.id_evento, e.nombre, e.fecha
-            ORDER BY e.fecha;
+            SELECT id_entrada, id_evento, comprador, email, cantidad, fecha_compra
+            FROM Entrada
+            ORDER BY fecha_compra DESC;
             """;
 
         try (Connection conn = Conexion.conectar();
@@ -72,18 +64,19 @@ public class VentanaInformeEntradas extends JFrame {
             modeloTabla.setRowCount(0); // limpiar tabla
 
             while (rs.next()) {
-                String nombre = rs.getString("nombre");
-                String fecha = rs.getString("fecha");
-                int entradas = rs.getInt("total_entradas");
-                int ventas = rs.getInt("total_ventas");
-                int recaudacion = entradas * PRECIO_ENTRADA;
+                int idEntrada = rs.getInt("id_entrada");
+                int idEvento = rs.getInt("id_evento");
+                String comprador = rs.getString("comprador");
+                String email = rs.getString("email");
+                int cantidad = rs.getInt("cantidad");
+                String fechaCompra = rs.getString("fecha_compra");
 
-                Object[] fila = {nombre, fecha, entradas, ventas, recaudacion};
+                Object[] fila = {idEntrada, idEvento, comprador, email, cantidad, fechaCompra};
                 modeloTabla.addRow(fila);
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al generar informe: " + e.getMessage(),
+            JOptionPane.showMessageDialog(this, "Error al cargar informe: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

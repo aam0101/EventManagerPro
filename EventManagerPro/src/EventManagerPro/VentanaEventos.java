@@ -10,14 +10,13 @@ public class VentanaEventos extends JFrame {
 
     public VentanaEventos() {
         setTitle("Gestión de Eventos");
-        setSize(550, 400);
+        setSize(600, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
         ImageIcon iconoVentana = new ImageIcon(getClass().getResource("/EventManagerPro/icon.png"));
         setIconImage(iconoVentana.getImage());
-        // Fondo gris claro
         getContentPane().setBackground(new Color(245, 245, 245));
 
         modelo = new DefaultListModel<>();
@@ -26,13 +25,13 @@ public class VentanaEventos extends JFrame {
         JScrollPane scroll = new JScrollPane(listaEventos);
 
         JButton btnAgregar = new JButton("Agregar Evento");
+        JButton btnModificar = new JButton("Modificar Evento");
         JButton btnRefrescar = new JButton("Refrescar Lista");
         JButton btnEntradas = new JButton("Gestionar Entradas");
         JButton btnInforme = new JButton("Ver Informe");
-        JButton btnEliminar = new JButton("Eliminar Evento");  // NUEVO botón
+        JButton btnEliminar = new JButton("Eliminar Evento");
 
-        // Estilo botones
-        JButton[] botones = {btnAgregar, btnRefrescar, btnEntradas, btnInforme, btnEliminar};
+        JButton[] botones = {btnAgregar, btnModificar, btnRefrescar, btnEntradas, btnInforme, btnEliminar};
         for (JButton b : botones) {
             b.setBackground(new Color(0, 120, 215));
             b.setForeground(Color.WHITE);
@@ -40,14 +39,15 @@ public class VentanaEventos extends JFrame {
             b.setFocusPainted(false);
         }
 
-        JPanel panelBotones = new JPanel();
+        JPanel panelBotones = new JPanel(new GridLayout(2, 3, 10, 10));
         panelBotones.setBackground(new Color(245, 245, 245));
         panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panelBotones.add(btnAgregar);
+        panelBotones.add(btnModificar);
         panelBotones.add(btnRefrescar);
         panelBotones.add(btnEntradas);
         panelBotones.add(btnInforme);
-        panelBotones.add(btnEliminar);  // Añadido al panel
+        panelBotones.add(btnEliminar);
 
         add(scroll, BorderLayout.CENTER);
         add(panelBotones, BorderLayout.SOUTH);
@@ -55,11 +55,20 @@ public class VentanaEventos extends JFrame {
         cargarEventos();
 
         btnAgregar.addActionListener(e -> new VentanaAgregarEvento(this).setVisible(true));
+        btnModificar.addActionListener(e -> {
+            Evento seleccionado = listaEventos.getSelectedValue();
+            if (seleccionado == null) {
+                JOptionPane.showMessageDialog(this, "Selecciona un evento para modificar.",
+                        "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            VentanaAgregarEvento ventanaEditar = new VentanaAgregarEvento(this, seleccionado);
+            ventanaEditar.setVisible(true);
+        });
         btnRefrescar.addActionListener(e -> cargarEventos());
         btnEntradas.addActionListener(e -> new VentanaEntradas().setVisible(true));
         btnInforme.addActionListener(e -> new VentanaInformeEntradas().setVisible(true));
 
-        // Acción para eliminar evento
         btnEliminar.addActionListener(e -> {
             Evento seleccionado = listaEventos.getSelectedValue();
             if (seleccionado == null) {
@@ -98,7 +107,6 @@ public class VentanaEventos extends JFrame {
     }
 
     public static void main(String[] args) {
-        // Aplicar Look and Feel Nimbus
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

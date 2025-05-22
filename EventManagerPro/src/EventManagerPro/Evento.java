@@ -17,6 +17,7 @@ public class Evento {
         this.capacidad = capacidad;
     }
 
+    // Getters
     public int getId() { return id; }
     public String getNombre() { return nombre; }
     public String getTipo() { return tipo; }
@@ -24,8 +25,15 @@ public class Evento {
     public String getLugar() { return lugar; }
     public int getCapacidad() { return capacidad; }
 
+    // Setters
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
+    public void setFecha(String fecha) { this.fecha = fecha; }
+    public void setLugar(String lugar) { this.lugar = lugar; }
+    public void setCapacidad(int capacidad) { this.capacidad = capacidad; }
+
     @Override
     public String toString() {
-        return nombre + " (" + fecha + ") - " + lugar;
+        return nombre + " (" + fecha + ")";
     }
 }
