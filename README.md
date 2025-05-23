@@ -1,49 +1,60 @@
-# Proyecto de Gestion de Eventos
+Gestión de Eventos y Venta de Entradas
+Descripción
+Este proyecto en Java implementa una aplicación para la gestión de eventos y la venta de entradas. Utiliza una base de datos MySQL para almacenar información sobre eventos y entradas, y una interfaz gráfica desarrollada con Swing para facilitar la interacción con el usuario.
 
-## Descripción del Proyecto
+Características principales
+Crear, modificar y eliminar eventos.
 
-Este proyecto Java implementa la conexión a una base de datos SQL utilizando JDBC y el uso del patrón DAO para realizar operaciones sobre la tabla `Entrada`. El objetivo principal es establecer una conexión segura mediante el uso de un Oracle Wallet, facilitando así el acceso a una base de datos remota sin necesidad de exponer credenciales sensibles.
+Visualizar la lista de eventos disponibles.
 
-## Sistema Gestor de Base de Datos (SGBD) Utilizado
+Registrar la venta de entradas para eventos específicos.
 
-- **Oracle Database** (ej. Oracle Autonomous Database en Oracle Cloud Infrastructure)
-- Conexión mediante **JDBC** usando **Oracle Wallet** para mayor seguridad.
+Generar informes sobre las entradas vendidas.
 
-## Estructura del Proyecto
+Interfaz gráfica sencilla e intuitiva.
 
-- `Conexion.java`: Clase responsable de establecer la conexión con la base de datos Oracle.
-- `EntradaDAO.java`: Clase DAO que realiza operaciones sobre los registros de la tabla `Entrada`.
+Tecnologías usadas
+Java SE
 
-## Requisitos Previos
+Swing (para interfaz gráfica)
 
-1. **JDK 8 o superior**
-2. **Oracle JDBC Driver** (ojdbc8.jar u ojdbc11.jar)
-3. **Wallet de Oracle** descargado desde Oracle Cloud (si se usa un Autonomous DB)
-4. **IDE de desarrollo Java** como IntelliJ IDEA, Eclipse o NetBeans.
+MySQL (base de datos)
 
----
+JDBC (para conexión a la base de datos)
 
-## Configuración del Entorno
+Instalación y ejecución
+Asegúrate de tener instalado Java JDK y MySQL.
 
-### 1. Descargar el Driver JDBC
+Configura la base de datos MySQL y crea la base con las tablas necesarias (evento, entrada, etc.).
 
-- Desde el sitio oficial de Oracle:  
-  [https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html](https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html)
-- Agrega el archivo `ojdbc8.jar` al classpath del proyecto.
+Modifica la clase Conexion.java para que contenga los datos correctos de conexión (URL, usuario, contraseña).
 
-### 2. Descargar y Configurar el Oracle Wallet (si aplica)
+Compila el proyecto con tu IDE favorito (Eclipse, IntelliJ, NetBeans) o desde consola.
 
-Si estás usando una base de datos autónoma en Oracle Cloud:
+Ejecuta la clase principal Main.java para iniciar la aplicación.
 
-1. Inicia sesión en [https://cloud.oracle.com](https://cloud.oracle.com).
-2. Ve al panel de tu base de datos autónoma.
-3. Haz clic en **DB Connection**.
-4. Descarga el **Wallet** (selecciona "Instance Wallet").
-5. Extrae el contenido en una carpeta, por ejemplo: `./wallet`.
+Navega por la interfaz para gestionar eventos y entradas.
 
-### 3. Configurar el archivo `sqlnet.ora`, `tnsnames.ora`, y `cwallet.sso`
+Estructura del proyecto
+Modelo: Clases Evento, Entrada, etc.
 
-Asegúrate de que el archivo `Conexion.java` apunte correctamente al directorio del Wallet y que el `tnsnames.ora` incluya la configuración de tu base de datos. Ejemplo de URL de conexión:
+DAO: Clases que manejan acceso y manipulación de datos (EventoDAO, EntradaDAO).
 
-```java
-String url = "jdbc:oracle:thin:@tu_alias_db?TNS_ADMIN=/ruta/a/tu/wallet";
+Vistas: Clases con ventanas Swing (VentanaInicio, VentanaAgregarEvento, VentanaEventos, VentanaEntradas, VentanaInformeEntradas).
+
+Utilidad: Clase para conexión a base de datos (Conexion).
+
+Uso básico
+Desde la ventana inicial se puede acceder a la gestión de eventos, agregar nuevos eventos, vender entradas o consultar informes.
+
+En la gestión de eventos se pueden modificar o eliminar eventos existentes.
+
+En la venta de entradas se selecciona un evento y se registra la venta.
+
+Los informes permiten visualizar datos resumidos de las ventas.
+
+Contribuciones
+Las contribuciones son bienvenidas. Puedes crear un fork y enviar pull requests para mejorar funcionalidades o corregir errores.
+
+Licencia
+Este proyecto es para uso educativo y de práctica. No se incluye licencia explícita.
