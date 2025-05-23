@@ -1,51 +1,82 @@
-# Gestión de Eventos y Venta de Entradas
+# 📅🎟️ Proyecto Gestión de Eventos y Venta de Entradas
 
-## Descripción
+## 📝 Descripción
 
-Este proyecto en Java implementa una aplicación para la gestión de eventos y la venta de entradas. Utiliza una base de datos MySQL para almacenar información sobre eventos y entradas, y una interfaz gráfica desarrollada con Swing para facilitar la interacción con el usuario.
+Esta es una aplicación de escritorio en **Java Swing** para gestionar eventos y la venta de entradas. Utiliza una base de datos **MySQL** para almacenar la información y ofrece interfaces gráficas amigables para facilitar la administración.
 
-## Características principales
+---
 
-- Crear, modificar y eliminar eventos.
-- Visualizar la lista de eventos disponibles.
-- Registrar la venta de entradas para eventos específicos.
-- Generar informes sobre las entradas vendidas.
-- Interfaz gráfica sencilla e intuitiva.
+## 🗂️ Estructura del Proyecto
 
-## Tecnologías usadas
+### 📁 Archivos principales
 
-- Java SE
-- Swing (para interfaz gráfica)
-- MySQL (base de datos)
-- JDBC (para conexión a la base de datos)
+- **Main.java**  
+  ▶️ Punto de inicio de la aplicación.
 
-## Instalación y ejecución
+- **Conexion.java**  
+  🔌 Maneja la conexión a la base de datos MySQL.
 
-1. Asegúrate de tener instalado Java JDK y MySQL.
-2. Configura la base de datos MySQL y crea la base con las tablas necesarias (evento, entrada, etc.).
-3. Modifica la clase `Conexion.java` para que contenga los datos correctos de conexión (URL, usuario, contraseña).
-4. Compila el proyecto con tu IDE favorito (Eclipse, IntelliJ, NetBeans) o desde consola.
-5. Ejecuta la clase principal `Main.java` para iniciar la aplicación.
-6. Navega por la interfaz para gestionar eventos y entradas.
+- **Evento.java**  
+  🎉 Representa un evento.
 
-## Estructura del proyecto
+- **EventoDAO.java**  
+  💾 Operaciones para gestionar eventos en la base de datos.
 
-- **Modelo:** Clases `Evento`, `Entrada`, etc.
-- **DAO:** Clases que manejan acceso y manipulación de datos (`EventoDAO`, `EntradaDAO`).
-- **Vistas:** Clases con ventanas Swing (`VentanaInicio`, `VentanaAgregarEvento`, `VentanaEventos`, `VentanaEntradas`, `VentanaInformeEntradas`).
-- **Utilidad:** Clase para conexión a base de datos (`Conexion`).
+- **EntradaDAO.java**  
+  🎫 Operaciones para gestionar entradas vendidas.
 
-## Uso básico
+---
 
-- Desde la ventana inicial se puede acceder a la gestión de eventos, agregar nuevos eventos, vender entradas o consultar informes.
-- En la gestión de eventos se pueden modificar o eliminar eventos existentes.
-- En la venta de entradas se selecciona un evento y se registra la venta.
-- Los informes permiten visualizar datos resumidos de las ventas.
+### 🖥️ Interfaces gráficas (Ventanas Swing)
 
-## Contribuciones
+- **VentanaInicio.java**  
+  🏠 Ventana principal para navegar entre opciones.
 
-Las contribuciones son bienvenidas. Puedes crear un fork y enviar pull requests para mejorar funcionalidades o corregir errores.
+- **VentanaEventos.java**  
+  📋 Lista y gestión de eventos.
 
-## Licencia
+- **VentanaAgregarEvento.java**  
+  ➕ Formulario para agregar nuevos eventos.
 
-Este proyecto es para uso educativo y de práctica. No se incluye licencia explícita.
+- **VentanaEntradas.java**  
+  🎟️ Venta y gestión de entradas.
+
+- **VentanaInformeEntradas.java**  
+  📊 Informes y estadísticas de ventas.
+
+---
+
+## ⚙️ Requisitos
+
+- ☕ Java JDK 8 o superior  
+- 🐬 MySQL con las tablas configuradas  
+- 🔗 Librería JDBC Connector para MySQL
+
+---
+
+## 🔧 Configuración
+
+1. Crear la base de datos y tablas necesarias en MySQL.  
+2. Configurar la conexión en `Conexion.java` con tus datos (host, usuario, contraseña).  
+3. Compilar y ejecutar `Main.java` para iniciar la app.
+
+---
+
+## 🚀 Uso
+
+- Desde la ventana principal 🏠, accede a la gestión de eventos para crear o modificar eventos.  
+- En la ventana de entradas 🎟️, vende entradas para los eventos disponibles.  
+- Consulta los informes 📊 para revisar estadísticas de ventas.
+
+---
+
+## 💡 Posibles mejoras
+
+- ✅ Validaciones y manejo de errores más robustos.  
+- 🎨 Mejoras en la interfaz gráfica.  
+- 📄 Exportar informes a PDF o Excel.  
+- 🔐 Gestión de usuarios y permisos.
+
+---
+
+Si quieres, puedo ayudarte a crear un script para la base de datos o ampliar la documentación. ¡Solo dime! 😊
