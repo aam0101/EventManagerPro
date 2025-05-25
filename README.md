@@ -56,7 +56,7 @@ Esta es una aplicación de escritorio en **Java Swing** para gestionar eventos y
 
 ## 🔧 Configuración
 
-1. Crear la base de datos y tablas necesarias en MySQL.  
+1. Crear la base de datos y tablas necesarias en MySQL (Puede realizarlo con el archivo adjunto).  
 2. Configurar la conexión en `Conexion.java` con tus datos (host, usuario, contraseña).  
 3. Compilar y ejecutar `Main.java` para iniciar la app.
 
@@ -64,19 +64,9 @@ Esta es una aplicación de escritorio en **Java Swing** para gestionar eventos y
 
 ## 🚀 Uso
 
-- Desde la ventana principal 🏠, accede a la gestión de eventos para crear o modificar eventos.  
+- Desde la ventana principal 🏠, accede al menu de la aplicacion, donde podras elegir entre las diferentes acciones:
+- La gestión de eventos para crear, eliminar o modificar eventos.  
 - En la ventana de entradas 🎟️, vende entradas para los eventos disponibles.  
 - Consulta los informes 📊 para revisar estadísticas de ventas.
 
 ---
-
-## 💡 Posibles mejoras
-
-- ✅ Validaciones y manejo de errores más robustos.  
-- 🎨 Mejoras en la interfaz gráfica.  
-- 📄 Exportar informes a PDF o Excel.  
-- 🔐 Gestión de usuarios y permisos.
-
----
-
-Si quieres, puedo ayudarte a crear un script para la base de datos o ampliar la documentación. ¡Solo dime! 😊
